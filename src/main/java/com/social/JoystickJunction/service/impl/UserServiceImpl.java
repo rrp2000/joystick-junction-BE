@@ -7,6 +7,7 @@ import com.social.JoystickJunction.common.dto.request.RegisterRequest;
 import com.social.JoystickJunction.common.dto.response.AuthResponse;
 import com.social.JoystickJunction.common.dto.response.BaseResponse;
 import com.social.JoystickJunction.common.dto.response.UserResponseDto;
+import com.social.JoystickJunction.common.util.HelperUtil;
 import com.social.JoystickJunction.config.JwtProvider;
 import com.social.JoystickJunction.exception.UserServiceException;
 import com.social.JoystickJunction.models.User;
@@ -46,9 +47,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (user.getFirstName() == null || user.getFirstName().isEmpty()) {
             throw new UserServiceException("First name cannot be empty", HttpStatus.BAD_REQUEST);
         }
+        user.setFirstName(HelperUtil.toTitleCase(user.getFirstName()));
+
         if (user.getLastName() == null || user.getLastName().isEmpty()) {
             throw new UserServiceException("Last name cannot be empty", HttpStatus.BAD_REQUEST);
         }
+        user.setLastName(HelperUtil.toTitleCase(user.getLastName()));
+
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             throw new UserServiceException("Email cannot be empty", HttpStatus.BAD_REQUEST);
         }

@@ -20,6 +20,8 @@ public class RegisterRequest {
     private String password;
     private String email;
     private String role;
+    private String location;
+    private String occupation;
     private MultipartFile picture;
     private String picturePath;
 }

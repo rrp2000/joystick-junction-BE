@@ -25,6 +25,8 @@ public class User {
     private String password;
     private String email;
     private String role;
+    private String location;
+    private String occupation;
     private long createdAt;
     private byte[] picture;
     private String picturePath;
@@ -37,5 +39,7 @@ public class User {
         this.role = user.getRole();
         this.createdAt = System.currentTimeMillis();
         this.picturePath = user.getPicturePath();
+        this.location = user.getLocation();
+        this.occupation = user.getOccupation();
     }
 }
