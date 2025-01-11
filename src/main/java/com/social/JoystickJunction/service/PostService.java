@@ -1,11 +1,12 @@
 package com.social.JoystickJunction.service;
 
+import com.social.JoystickJunction.common.dto.request.PostDto;
 import com.social.JoystickJunction.common.dto.request.PostUpdateRequest;
 import com.social.JoystickJunction.common.dto.response.BaseResponse;
 import com.social.JoystickJunction.models.Post;
 
 public interface PostService {
-    BaseResponse createPost(Post postDetails, String userId);
+    BaseResponse createPost(PostDto postDetails);
 
     BaseResponse fetchFeedPosts();
 

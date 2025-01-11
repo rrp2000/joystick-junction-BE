@@ -1,5 +1,6 @@
 package com.social.JoystickJunction.service.impl;
 
+import com.social.JoystickJunction.common.dto.request.PostDto;
 import com.social.JoystickJunction.common.dto.request.PostUpdateRequest;
 import com.social.JoystickJunction.common.dto.response.BaseResponse;
 import com.social.JoystickJunction.exception.PostServiceException;
@@ -29,22 +30,26 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public BaseResponse createPost(Post postDetails, String userId) {
+    public BaseResponse createPost(PostDto postDetails) {
         BaseResponse baseResponse = new BaseResponse();
 
-        Optional<User> userDetails = userRepository.findById(userId);
+        Optional<User> userDetails = userRepository.findById(postDetails.getUserId());
         if (userDetails.isEmpty()) {
-            throw new PostServiceException("User not found with user Id: " + userId, HttpStatus.NOT_FOUND);
+            throw new PostServiceException("User not found with user Id: " + postDetails.getUserId(), HttpStatus.NOT_FOUND);
         }
 
         Post newPost = new Post(userDetails.get());
         newPost.setDescription(postDetails.getDescription());
         newPost.setPicturePath(postDetails.getPicturePath());
-
-        Post savedPost = postRepository.save(newPost);
+        try{
+            newPost.setPicture(postDetails.getPicture().getBytes());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        postRepository.save(newPost);
 
         baseResponse.setMessage("Post created successfully");
-        baseResponse.setPayload(savedPost);
+        baseResponse.setPayload(postRepository.findAll());
         baseResponse.setSuccess(true);
 
         return baseResponse;

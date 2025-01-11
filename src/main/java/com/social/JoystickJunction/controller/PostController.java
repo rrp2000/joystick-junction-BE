@@ -1,5 +1,6 @@
 package com.social.JoystickJunction.controller;
 
+import com.social.JoystickJunction.common.dto.request.PostDto;
 import com.social.JoystickJunction.common.dto.request.PostUpdateRequest;
 import com.social.JoystickJunction.common.dto.response.BaseResponse;
 import com.social.JoystickJunction.models.Post;
@@ -22,12 +23,11 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping(API + CREATE_POST + USER_ID_PATH_VARIABLE)
+    @PostMapping(API + CREATE_POST)
     public ResponseEntity<BaseResponse> createPost(
-            @RequestBody Post postDetails,
-            @PathVariable(USER_ID) String userId
+            @ModelAttribute PostDto postDetails
     ) {
-        BaseResponse baseResponse = postService.createPost(postDetails, userId);
+        BaseResponse baseResponse = postService.createPost(postDetails);
         return new ResponseEntity<>(baseResponse, HttpStatus.CREATED);
     }
 
